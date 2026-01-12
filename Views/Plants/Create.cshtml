@@ -1,0 +1,35 @@
+﻿@model PlantTracker3NET.Models.Plant
+
+@{
+    ViewData["Title"] = "Add Plant";
+}
+
+<h1>Add New Plant</h1>
+
+<form asp-action="Create" method="post">
+    <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input asp-for="Name" class="form-control"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Planted Date</label>
+        <input asp-for="PlantedDate" type="date" class="form-control"/>
+        <span asp-validation-for="PlantedDate" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Water Every (days)</label>
+        <input asp-for="WaterEveryDays" type="number" class="form-control"/>
+        <span asp-validation-for="WaterEveryDays" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Comment</label>
+        <textarea asp-for="Comment" class="form-control"></textarea>
+    </div>
+    <button type="submit" class="btn btn-success">Save</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,41 @@
+﻿@model IEnumerable<PlantTracker3NET.Models.Plant>
+
+@{
+    ViewData["Title"] = "Plants";
+}
+
+<h1>Plants</h1>
+
+<p>
+    <a class="btn btn-success" asp-action="Create">Add New Plant</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Planted Date</th>
+            <th>Water Every (days)</th>
+            <th>Last Watered</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var plant in Model)
+{
+        <tr>
+            <td>@plant.Name</td>
+            <td>@plant.Category?.Name</td>
+            <td>@plant.PlantedDate.ToShortDateString()</td>
+            <td>@plant.WaterEveryDays</td>
+            <td>@plant.LastWatered?.ToShortDateString()</td>
+            <td>
+                <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@plant.Id">Edit</a>
+                <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@plant.Id">Details</a>
+                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@plant.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
