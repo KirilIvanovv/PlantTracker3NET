@@ -13,6 +13,11 @@ namespace PlantTracker3NET.Controllers
             _logger = logger;
         }
 
+        public IActionResult Garden()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();
