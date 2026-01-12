@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36109.1 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlantTracker3NET", "PlantTracker3NET.csproj", "{9419EB5C-5E3F-49F4-93BB-7DCEE17D99D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9419EB5C-5E3F-49F4-93BB-7DCEE17D99D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9419EB5C-5E3F-49F4-93BB-7DCEE17D99D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9419EB5C-5E3F-49F4-93BB-7DCEE17D99D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9419EB5C-5E3F-49F4-93BB-7DCEE17D99D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E3A8D66A-BE9F-453B-8C8A-C4D2CD7B402A}
+	EndGlobalSection
+EndGlobal
