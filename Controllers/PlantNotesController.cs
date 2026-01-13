@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PlantTracker3NET.Data;
 using PlantTracker3NET.Models;
@@ -10,34 +11,30 @@ namespace PlantTracker3NET.Controllers
         private readonly AppDbContext _context;
         public PlantNotesController(AppDbContext context) => _context = context;
 
-        public async Task<IActionResult> Index() =>
-            View(await _context.PlantNotes.Include(n => n.Plant).ToListAsync());
+        public async Task<IActionResult> Index()
+        {
+            var notes = await _context.PlantNotes.Include(p => p.Plant).ToListAsync();
+            return View(notes);
+        }
 
-        public IActionResult Create() => View();
+        public IActionResult Create()
+        {
+            ViewBag.PlantId = new SelectList(_context.Plants, "Id", "Name");
+            return View();
+        }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(PlantNote note)
         {
-            if (!ModelState.IsValid) return View(note);
-            _context.PlantNotes.Add(note);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        public async Task<IActionResult> Edit(int id)
-        {
-            var note = await _context.PlantNotes.FindAsync(id);
-            if (note == null) return NotFound();
+            if (ModelState.IsValid)
+            {
+                _context.PlantNotes.Add(note);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewBag.PlantId = new SelectList(_context.Plants, "Id", "Name", note.PlantId);
             return View(note);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(PlantNote note)
-        {
-            if (!ModelState.IsValid) return View(note);
-            _context.PlantNotes.Update(note);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(int id)

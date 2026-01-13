@@ -10,31 +10,17 @@ namespace PlantTracker3NET.Controllers
         private readonly AppDbContext _context;
         public GardenToolsController(AppDbContext context) => _context = context;
 
-        public async Task<IActionResult> Index() => View(await _context.GardenTools.ToListAsync());
+        public async Task<IActionResult> Index()
+        {
+            return View(await _context.GardenTools.ToListAsync());
+        }
 
         public IActionResult Create() => View();
 
         [HttpPost]
         public async Task<IActionResult> Create(GardenTool tool)
         {
-            if (!ModelState.IsValid) return View(tool);
             _context.GardenTools.Add(tool);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        public async Task<IActionResult> Edit(int id)
-        {
-            var tool = await _context.GardenTools.FindAsync(id);
-            if (tool == null) return NotFound();
-            return View(tool);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Edit(GardenTool tool)
-        {
-            if (!ModelState.IsValid) return View(tool);
-            _context.GardenTools.Update(tool);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

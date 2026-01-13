@@ -1,35 +1,39 @@
 ﻿@model PlantTracker3NET.Models.Plant
-
-@{
-    ViewData["Title"] = "Add Plant";
-}
-
-<h1>Add New Plant</h1>
-
-<form asp-action="Create" method="post">
-    <div class="mb-3">
-        <label class="form-label">Name</label>
-        <input asp-for="Name" class="form-control"/>
-        <span asp-validation-for="Name" class="text-danger"></span>
+@{ Layout = null; }
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add New Plant</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 500px;">
+        <h4 class="mb-3">Add New Plant</h4>
+        <form asp-action="Create" method="post">
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input asp-for="Name" class="form-control" required />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Planted Date</label>
+                <input asp-for="PlantedDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Water Every (days)</label>
+                <input asp-for="WaterEveryDays" type="number" class="form-control" value="1" />
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Comment</label>
+                <textarea asp-for="Comment" class="form-control" rows="2"></textarea>
+            </div>
+            
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-success">Save Plant</button>
+                <a href="/Plants/Index" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
     </div>
-    <div class="mb-3">
-        <label class="form-label">Planted Date</label>
-        <input asp-for="PlantedDate" type="date" class="form-control"/>
-        <span asp-validation-for="PlantedDate" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Water Every (days)</label>
-        <input asp-for="WaterEveryDays" type="number" class="form-control"/>
-        <span asp-validation-for="WaterEveryDays" class="text-danger"></span>
-    </div>
-    <div class="mb-3">
-        <label class="form-label">Comment</label>
-        <textarea asp-for="Comment" class="form-control"></textarea>
-    </div>
-    <button type="submit" class="btn btn-success">Save</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
-</form>
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+</div>
+</body>
+</html>

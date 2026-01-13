@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PlantTracker3NET.Data;
 using PlantTracker3NET.Models;
@@ -16,31 +17,53 @@ namespace PlantTracker3NET.Controllers
             return View(plants);
         }
 
-        public IActionResult Create() => View();
+        public IActionResult Create()
+        {
+            ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Name");
+            return View(new Plant()); 
+        }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Plant plant)
         {
-            if (!ModelState.IsValid) return View(plant);
             _context.Plants.Add(plant);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> Edit(int? id)
         {
+            if (id == null) return NotFound();
             var plant = await _context.Plants.FindAsync(id);
             if (plant == null) return NotFound();
+
+            ViewBag.CategoryId = new SelectList(_context.Categories, "Id", "Name", plant.CategoryId);
             return View(plant);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(Plant plant)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, Plant plant)
         {
-            if (!ModelState.IsValid) return View(plant);
-            _context.Plants.Update(plant);
+            if (id != plant.Id) return NotFound();
+
+            _context.Update(plant);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null) return NotFound();
+
+            var plant = await _context.Plants
+                .Include(p => p.Category)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (plant == null) return NotFound();
+
+            return View(plant);
         }
 
         public async Task<IActionResult> Delete(int id)

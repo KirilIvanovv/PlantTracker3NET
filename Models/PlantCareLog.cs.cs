@@ -1,21 +1,14 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace PlantTracker3NET.Models
 {
     public class PlantCareLog
     {
-        [Key]
         public int Id { get; set; }
+        public DateTime Date { get; set; } = DateTime.Now; 
+        public string ActionTaken { get; set; } = string.Empty; 
 
-        [Required]
         public int PlantId { get; set; }
-        public Plant Plant { get; set; }
-
-        [Required]
-        public DateTime ActionDate { get; set; }
-
-        [Required, StringLength(200)]
-        public string Action { get; set; } 
+        public Plant? Plant { get; set; }
     }
 }
